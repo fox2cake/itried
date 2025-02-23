@@ -17,9 +17,9 @@
         }
         .clickable-area {
             position: absolute;
-            top: 65%; /* Регулируй в зависимости от позиции кнопки на фоне */
+            top: 60%; /* Регулируй в зависимости от позиции кнопки на фоне */
             left: 50%;
-            width: 400px; /* Примерный размер кнопки */
+            width: 200px; /* Примерный размер кнопки */
             height: 60px;
             transform: translate(-50%, -50%);
             cursor: pointer;
@@ -28,21 +28,21 @@
             position: absolute;
             width: 5px;
             height: 5px;
-            background: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 204, 0, 0.8); /* Желтый цвет */
             border-radius: 50%;
             opacity: 0;
-            animation: float 5s infinite;
+            animation: fall 5s infinite;
         }
-        @keyframes float {
+        @keyframes fall {
             0% {
-                transform: translateY(0);
+                transform: translateY(-100vh);
                 opacity: 0;
             }
             50% {
                 opacity: 1;
             }
             100% {
-                transform: translateY(-100vh);
+                transform: translateY(100vh);
                 opacity: 0;
             }
         }
@@ -66,12 +66,19 @@
                 particle.classList.add('particle');
                 document.body.appendChild(particle);
                 particle.style.left = Math.random() * 100 + 'vw';
-                particle.style.top = Math.random() * 100 + 'vh';
+                particle.style.top = Math.random() * -100 + 'vh';
                 particle.style.animationDuration = (Math.random() * 3 + 2) + 's';
                 particle.style.animationDelay = (Math.random() * 5) + 's';
             }
         }
         createParticles();
+
+        document.addEventListener('click', function() {
+            let audio = document.getElementById('bg-music');
+            if (audio.paused) {
+                audio.play();
+            }
+        });
     </script>
 </body>
 </html>
