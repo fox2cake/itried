@@ -1,84 +1,73 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The King's Trial</title>
-    <style>
-        body {
-            background: url('screen-1.jpg') no-repeat center center/cover;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
+import { useEffect } from "react";
+
+export default function Home() {
+  useEffect(() => {
+    const createParticle = () => {
+      const particle = document.createElement("div");
+      particle.classList.add("particle");
+      document.body.appendChild(particle);
+      
+      const size = Math.random() * 5 + 2 + "px";
+      particle.style.width = size;
+      particle.style.height = size;
+      particle.style.left = Math.random() * window.innerWidth + "px";
+      
+      setTimeout(() => {
+        particle.remove();
+      }, 8000); // Живет 8 секунд
+    };
+    
+    const interval = setInterval(createParticle, 200);
+    return () => clearInterval(interval);
+  }, []);
+  
+  const playMusic = () => {
+    const audio = document.getElementById("background-music");
+    if (audio.paused) {
+      audio.play();
+    }
+  };
+  
+  return (
+    <div className="container" onClick={playMusic}>
+      <audio id="background-music" src="/music.mp3"></audio>
+      <div className="button-area"></div>
+      <style jsx>{`
+        .container {
+          position: relative;
+          width: 100vw;
+          height: 100vh;
+          background: url("/screen-1.jpg") no-repeat center center;
+          background-size: cover;
         }
-        .clickable-area {
-            position: absolute;
-            top: 60%; /* Регулируй в зависимости от позиции кнопки на фоне */
-            left: 50%;
-            width: 200px; /* Примерный размер кнопки */
-            height: 60px;
-            transform: translate(-50%, -50%);
-            cursor: pointer;
+        .button-area {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 200px;
+          height: 50px;
+          transform: translate(-50%, -50%);
+          cursor: pointer;
         }
         .particle {
-            position: absolute;
-            width: 5px;
-            height: 5px;
-            background: rgba(255, 204, 0, 0.8); /* Желтый цвет */
-            border-radius: 50%;
-            opacity: 0;
-            animation: fall 5s infinite;
+          position: fixed;
+          background: rgba(255, 223, 100, 0.8);
+          border-radius: 50%;
+          opacity: 0.8;
+          bottom: 100%;
+          animation: fall 10s linear infinite; /* Снижена скорость падения */
         }
         @keyframes fall {
-            0% {
-                transform: translateY(-100vh);
-                opacity: 0;
-            }
-            50% {
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(100vh);
-                opacity: 0;
-            }
+          from {
+            transform: translateY(0);
+            opacity: 1;
+          }
+          to {
+            transform: translateY(100vh);
+            opacity: 0;
+          }
         }
-    </style>
-</head>
-<body>
-    <div class="clickable-area" onclick="startTrial()"></div>
-    <audio id="bg-music" loop autoplay>
-        <source src="music.mp3" type="audio/mpeg">
-        Your browser does not support the audio element.
-    </audio>
-    
-    <script>
-        function startTrial() {
-            window.location.href = 'game.html'; // Перенаправление на страницу с игрой
-        }
-
-        function createParticles() {
-            for (let i = 0; i < 30; i++) {
-                let particle = document.createElement('div');
-                particle.classList.add('particle');
-                document.body.appendChild(particle);
-                particle.style.left = Math.random() * 100 + 'vw';
-                particle.style.top = Math.random() * -100 + 'vh';
-                particle.style.animationDuration = (Math.random() * 3 + 2) + 's';
-                particle.style.animationDelay = (Math.random() * 5) + 's';
-            }
-        }
-        createParticles();
-
-        document.addEventListener('click', function() {
-            let audio = document.getElementById('bg-music');
-            if (audio.paused) {
-                audio.play();
-            }
-        });
-    </script>
-</body>
-</html>
+      `}</style>
+    </div>
+  );
+}
