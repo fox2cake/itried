@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The King's Trial</title>
+    <style>
+        body {
+            background: url('screen-1.jpg') no-repeat center center/cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+            position: relative;
+        }
+        .clickable-area {
+            position: absolute;
+            top: 60%; /* Регулируй в зависимости от позиции кнопки на фоне */
+            left: 50%;
+            width: 200px; /* Примерный размер кнопки */
+            height: 60px;
+            transform: translate(-50%, -50%);
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="clickable-area" onclick="startTrial()"></div>
+    <audio id="bg-music" loop autoplay>
+        <source src="music.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    
+    <script>
+        function startTrial() {
+            window.location.href = 'game.html'; // Перенаправление на страницу с игрой
+        }
+    </script>
+</body>
+</html>
