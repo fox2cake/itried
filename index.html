@@ -17,9 +17,9 @@
         }
         .clickable-area {
             position: absolute;
-            top: 65%; /* Подстрой под положение кнопки на фоне */
+            top: 65%;
             left: 50%;
-            width: 400px; /* Размер кнопки */
+            width: 400px;
             height: 60px;
             transform: translate(-50%, -50%);
             cursor: pointer;
@@ -28,10 +28,10 @@
             position: absolute;
             width: 5px;
             height: 5px;
-            background: rgba(255, 204, 0, 0.8); /* Желтый цвет */
+            background: rgba(255, 204, 0, 0.8);
             border-radius: 50%;
             opacity: 0;
-            animation: fall 6s infinite; /* Скорость уменьшена */
+            animation: fall 6s infinite;
         }
         @keyframes fall {
             0% {
@@ -50,14 +50,15 @@
 </head>
 <body>
     <div class="clickable-area" onclick="startTrial()"></div>
+
     <audio id="bg-music" loop>
         <source src="music.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
-    
+
     <script>
         function startTrial() {
-            window.location.href = 'screen-2.html'; // Переход на screen-2.html
+            window.location.href = 'screen-2.html';
         }
 
         function createParticles() {
@@ -67,18 +68,13 @@
                 document.body.appendChild(particle);
                 particle.style.left = Math.random() * 100 + 'vw';
                 particle.style.top = Math.random() * -100 + 'vh';
-                particle.style.animationDuration = (Math.random() * 3 + 3) + 's'; // Скорость уменьшена
+                particle.style.animationDuration = (Math.random() * 4 + 3) + 's';
                 particle.style.animationDelay = (Math.random() * 5) + 's';
             }
         }
         createParticles();
-
-        document.addEventListener('click', function() {
-            let audio = document.getElementById('bg-music');
-            if (audio.paused) {
-                audio.play();
-            }
-        });
     </script>
+
+    <script src="music.js"></script>
 </body>
 </html>
