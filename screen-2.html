@@ -29,17 +29,12 @@
 <body>
     <div class="clickable-area" onclick="beginReign()"></div>
 
-    <audio id="bg-music" loop>
-        <source src="music.mp3" type="audio/mpeg">
-        Your browser does not support the audio element.
-    </audio>
+    <iframe src="music.html" style="display: none;" id="music-frame"></iframe>
 
     <script>
         function beginReign() {
             window.location.href = 'screen-3.html';
         }
     </script>
-
-    <script src="music.js"></script>
 </body>
 </html>
