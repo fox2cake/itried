@@ -4,14 +4,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The King's Trial</title>
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            background: url('screen-2.jpg') no-repeat center center/cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .clickable-area {
+            position: absolute;
+            top: 65%;
+            left: 50%;
+            width: 400px;
+            height: 60px;
+            transform: translate(-50%, -50%);
+            cursor: pointer;
+        }
+    </style>
 </head>
-<body style="background-image: url('screen-2.jpg'); background-size: cover; background-position: center;">
-    <button id="startQuiz" class="invisible-button"></button>
+<body>
+    <div class="clickable-area" onclick="beginReign()"></div>
+
+    <audio id="bg-music" loop>
+        <source src="music.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
     <script>
-        document.getElementById("startQuiz").addEventListener("click", function() {
-            window.location.href = "screen-3.html"; // Следующая страница
-        });
+        function beginReign() {
+            window.location.href = 'screen-3.html';
+        }
     </script>
+
+    <script src="music.js"></script>
 </body>
 </html>
