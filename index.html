@@ -4,81 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The King's Trial</title>
-    <style>
-        body {
-            background: url('screen-1.jpg') no-repeat center center/cover;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-        .clickable-area {
-            position: absolute;
-            top: 65%; /* Регулируй в зависимости от позиции кнопки на фоне */
-            left: 50%;
-            width: 400px; /* Примерный размер кнопки */
-            height: 60px;
-            transform: translate(-50%, -50%);
-            cursor: pointer;
-        }
-        .particle {
-            position: absolute;
-            width: 5px;
-            height: 5px;
-            background: rgba(255, 204, 0, 0.8); /* Желтый цвет */
-            border-radius: 50%;
-            opacity: 0;
-            animation: fall 5s infinite;
-        }
-        @keyframes fall {
-            0% {
-                transform: translateY(-100vh);
-                opacity: 0;
-            }
-            50% {
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(100vh);
-                opacity: 0;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
-<body>
-    <div class="clickable-area" onclick="startTrial()"></div>
-    <audio id="bg-music" loop autoplay>
-        <source src="music.mp3" type="audio/mpeg">
-        Your browser does not support the audio element.
-    </audio>
-    
+<body style="background-image: url('screen-1.jpg'); background-size: cover; background-position: center;">
+
+    <!-- Невидимая кнопка для перехода -->
+    <button id="startGame" class="invisible-button"></button>
+
     <script>
-        function startTrial() {
-            window.location.href = 'game.html'; // Перенаправление на страницу с игрой
-        }
-
-        function createParticles() {
-            for (let i = 0; i < 30; i++) {
-                let particle = document.createElement('div');
-                particle.classList.add('particle');
-                document.body.appendChild(particle);
-                particle.style.left = Math.random() * 100 + 'vw';
-                particle.style.top = Math.random() * -100 + 'vh';
-                particle.style.animationDuration = (Math.random() * 3 + 2) + 's';
-                particle.style.animationDelay = (Math.random() * 5) + 's';
-            }
-        }
-        createParticles();
-
-        document.addEventListener('click', function() {
-            let audio = document.getElementById('bg-music');
-            if (audio.paused) {
-                audio.play();
-            }
+        document.getElementById("startGame").addEventListener("click", function() {
+            window.location.href = "screen-2.html";
         });
     </script>
+
 </body>
 </html>
