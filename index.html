@@ -49,4 +49,36 @@
     </style>
 </head>
 <body>
-    <div cl
+    <div class="clickable-area" onclick="startTrial()"></div>
+    <audio id="bg-music" loop>
+        <source src="music.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    
+    <script>
+        function startTrial() {
+            window.location.href = 'screen-2.html'; // Переход на screen-2.html
+        }
+
+        function createParticles() {
+            for (let i = 0; i < 30; i++) {
+                let particle = document.createElement('div');
+                particle.classList.add('particle');
+                document.body.appendChild(particle);
+                particle.style.left = Math.random() * 100 + 'vw';
+                particle.style.top = Math.random() * -100 + 'vh';
+                particle.style.animationDuration = (Math.random() * 3 + 3) + 's'; // Скорость уменьшена
+                particle.style.animationDelay = (Math.random() * 5) + 's';
+            }
+        }
+        createParticles();
+
+        document.addEventListener('click', function() {
+            let audio = document.getElementById('bg-music');
+            if (audio.paused) {
+                audio.play();
+            }
+        });
+    </script>
+</body>
+</html>
