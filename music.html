@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music</title>
+</head>
+<body>
+    <audio id="bg-music" loop autoplay>
+        <source src="music.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <script>
+        let audio = document.getElementById("bg-music");
+
+        if (localStorage.getItem("musicTime")) {
+            audio.currentTime = localStorage.getItem("musicTime");
+        }
+
+        window.addEventListener("beforeunload", function () {
+            localStorage.setItem("musicTime", audio.currentTime);
+        });
+
+        document.addEventListener("click", function () {
+            if (audio.paused) {
+                audio.play();
+            }
+        });
+    </script>
+</body>
+</html>
