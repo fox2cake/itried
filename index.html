@@ -17,9 +17,9 @@
         }
         .clickable-area {
             position: absolute;
-            top: 65%; /* Регулируй в зависимости от позиции кнопки на фоне */
+            top: 65%; /* Подстрой под положение кнопки на фоне */
             left: 50%;
-            width: 400px; /* Примерный размер кнопки */
+            width: 400px; /* Размер кнопки */
             height: 60px;
             transform: translate(-50%, -50%);
             cursor: pointer;
@@ -31,7 +31,7 @@
             background: rgba(255, 204, 0, 0.8); /* Желтый цвет */
             border-radius: 50%;
             opacity: 0;
-            animation: fall 5s infinite;
+            animation: fall 6s infinite; /* Скорость уменьшена */
         }
         @keyframes fall {
             0% {
@@ -49,36 +49,4 @@
     </style>
 </head>
 <body>
-    <div class="clickable-area" onclick="startTrial()"></div>
-    <audio id="bg-music" loop autoplay>
-        <source src="music.mp3" type="audio/mpeg">
-        Your browser does not support the audio element.
-    </audio>
-    
-    <script>
-        function startTrial() {
-            window.location.href = 'game.html'; // Перенаправление на страницу с игрой
-        }
-
-        function createParticles() {
-            for (let i = 0; i < 30; i++) {
-                let particle = document.createElement('div');
-                particle.classList.add('particle');
-                document.body.appendChild(particle);
-                particle.style.left = Math.random() * 100 + 'vw';
-                particle.style.top = Math.random() * -100 + 'vh';
-                particle.style.animationDuration = (Math.random() * 3 + 2) + 's';
-                particle.style.animationDelay = (Math.random() * 5) + 's';
-            }
-        }
-        createParticles();
-
-        document.addEventListener('click', function() {
-            let audio = document.getElementById('bg-music');
-            if (audio.paused) {
-                audio.play();
-            }
-        });
-    </script>
-</body>
-</html>
+    <div cl
