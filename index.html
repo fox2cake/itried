@@ -1,122 +1,75 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The King's Trial</title>
-    <style>
-        body {
-            background: url('screen-1.jpg') no-repeat center center/cover;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            transition: background 1s ease-in-out;
-        }
-        .clickable-area {
-            position: absolute;
-            cursor: pointer;
-        }
-        .hidden-button {
-            position: absolute;
-            width: 400px;
-            height: 60px;
-            cursor: pointer;
-            background: transparent;
-            border: none;
-        }
-        .particle {
-            position: absolute;
-            width: 5px;
-            height: 5px;
-            background: rgba(255, 204, 0, 0.8);
-            border-radius: 50%;
-            opacity: 0;
-            animation: fall 5s infinite;
-        }
-        @keyframes fall {
-            0% {
-                transform: translateY(-100vh);
-                opacity: 0;
-            }
-            50% {
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(100vh);
-                opacity: 0;
-            }
-        }
-    </style>
-</head>
-<body>
-    <audio id="bg-music" loop>
-        <source src="music.mp3" type="audio/mpeg">
-        Your browser does not support the audio element.
-    </audio>
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import "./styles.css";
 
-    <button id="screen1-btn" class="hidden-button" style="top: 65%; left: 50%; transform: translate(-50%, -50%);" onclick="changeScreen(2)"></button>
-    <button id="screen2-btn" class="hidden-button" style="top: 65%; left: 50%; transform: translate(-50%, -50%); display: none;" onclick="changeScreen(3)"></button>
-    
-    <button id="screen3-btn1" class="hidden-button" style="top: 55%; left: 50%; transform: translate(-50%, -50%); display: none;" onclick="selectAnswer(1)"></button>
-    <button id="screen3-btn2" class="hidden-button" style="top: 65%; left: 50%; transform: translate(-50%, -50%); display: none;" onclick="selectAnswer(2)"></button>
-    <button id="screen3-btn3" class="hidden-button" style="top: 75%; left: 50%; transform: translate(-50%, -50%); display: none;" onclick="selectAnswer(3)"></button>
-    
-    <button id="win-btn" class="hidden-button" style="top: 65%; left: 50%; transform: translate(-50%, -50%); display: none;" onclick="window.location.href='https://drive.google.com/'"></button>
-    <button id="lose-btn" class="hidden-button" style="top: 65%; left: 50%; transform: translate(-50%, -50%); display: none;" onclick="changeScreen(2)"></button>
+const screens = ["screen-1", "screen-2", "screen-3", "screen-4", "screen-5", "screen-win", "screen-loose"];
 
-    <script>
-        let incorrectAnswer = false;
-        document.addEventListener('click', function() {
-            let audio = document.getElementById('bg-music');
-            if (audio.paused) {
-                audio.play();
-            }
-        });
+export default function App() {
+  const [currentScreen, setCurrentScreen] = useState("screen-1");
+  const [wrongAnswers, setWrongAnswers] = useState(0);
 
-        function changeScreen(screenNumber) {
-            if (screenNumber === 2) {
-                document.body.style.backgroundImage = "url('screen-2.jpg')";
-                document.getElementById('screen1-btn').style.display = 'none';
-                document.getElementById('screen2-btn').style.display = 'block';
-            } else if (screenNumber === 3) {
-                document.body.style.backgroundImage = "url('screen-3.jpg')";
-                document.getElementById('screen2-btn').style.display = 'none';
-                document.getElementById('screen3-btn1').style.display = 'block';
-                document.getElementById('screen3-btn2').style.display = 'block';
-                document.getElementById('screen3-btn3').style.display = 'block';
-            } else if (screenNumber === 4) {
-                document.body.style.backgroundImage = "url('screen-4.jpg')";
-            } else if (screenNumber === 5) {
-                document.body.style.backgroundImage = "url('screen-5.jpg')";
-            } else if (screenNumber === 'win') {
-                document.body.style.backgroundImage = "url('screen-win.jpg')";
-                document.getElementById('win-btn').style.display = 'block';
-            } else if (screenNumber === 'lose') {
-                document.body.style.backgroundImage = "url('screen-loose.jpg')";
-                document.getElementById('lose-btn').style.display = 'block';
-            }
-        }
+  useEffect(() => {
+    const audio = document.getElementById("bg-music");
+    if (audio) {
+      audio.volume = 0.5;
+      audio.play().catch(() => {});
+    }
+  }, []);
 
-        function selectAnswer(answer) {
-            if (answer === 1) {
-                incorrectAnswer = true;
-            }
-            if (answer === 3) {
-                changeScreen(4);
-            } else if (answer === 4) {
-                changeScreen(5);
-            } else if (answer === 5) {
-                if (incorrectAnswer) {
-                    changeScreen('lose');
-                } else {
-                    changeScreen('win');
-                }
-            }
-        }
-    </script>
-</body>
-</html>
+  const handleNextScreen = (nextScreen) => {
+    if (screens.includes(nextScreen)) {
+      setCurrentScreen(nextScreen);
+    }
+  };
+
+  const handleAnswer = (isCorrect) => {
+    if (!isCorrect) {
+      setWrongAnswers((prev) => prev + 1);
+    }
+    if (currentScreen === "screen-3") handleNextScreen("screen-4");
+    else if (currentScreen === "screen-4") handleNextScreen("screen-5");
+    else if (currentScreen === "screen-5") {
+      if (wrongAnswers > 0) handleNextScreen("screen-loose");
+      else handleNextScreen("screen-win");
+    }
+  };
+
+  return (
+    <div className="app">
+      <audio id="bg-music" src="/background-music.mp3" loop />
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={currentScreen}
+          className={`screen ${currentScreen}`}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 1 }}
+        >
+          {currentScreen === "screen-1" && (
+            <button className="invisible-button" onClick={() => handleNextScreen("screen-2")} style={{ top: "50%", left: "50%" }} />
+          )}
+          {currentScreen === "screen-2" && (
+            <button className="invisible-button" onClick={() => handleNextScreen("screen-3")} style={{ top: "50%", left: "50%" }} />
+          )}
+          {["screen-3", "screen-4", "screen-5"].includes(currentScreen) && (
+            <>
+              <button className="invisible-button" onClick={() => handleAnswer(true)} style={{ top: "40%", left: "30%" }} />
+              <button className="invisible-button" onClick={() => handleAnswer(false)} style={{ top: "50%", left: "30%" }} />
+              <button className="invisible-button" onClick={() => handleAnswer(false)} style={{ top: "60%", left: "30%" }} />
+            </>
+          )}
+          {currentScreen === "screen-win" && (
+            <a href="https://drive.google.com" target="_blank" rel="noopener noreferrer">
+              <button className="invisible-button" style={{ top: "50%", left: "50%" }} />
+            </a>
+          )}
+          {currentScreen === "screen-loose" && (
+            <button className="invisible-button" onClick={() => handleNextScreen("screen-2")} style={{ top: "50%", left: "50%" }} />
+          )}
+        </motion.div>
+      </AnimatePresence>
+      <div className="particles" />
+    </div>
+  );
+}
