@@ -17,13 +17,27 @@
         }
         .clickable-area {
             position: absolute;
+            top: 65%;
+            left: 50%;
+            width: 400px;
+            height: 60px;
+            transform: translate(-50%, -50%);
             cursor: pointer;
-            display: none; /* Скрываем кнопки по умолчанию */
         }
-        .screen-3 .clickable-area, 
-        .screen-4 .clickable-area, 
-        .screen-5 .clickable-area {
-            display: block; /* Показываем кнопки только на нужных экранах */
+        .game-buttons {
+            display: none;
+            position: absolute;
+            left: 10%;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .game-buttons button {
+            width: 200px;
+            height: 50px;
+            cursor: pointer;
         }
         .particle {
             position: absolute;
@@ -32,7 +46,7 @@
             background: rgba(255, 204, 0, 0.8);
             border-radius: 50%;
             opacity: 0;
-            animation: fall 6s infinite;
+            animation: fall 7s infinite;
         }
         @keyframes fall {
             0% { transform: translateY(-100vh); opacity: 0; }
@@ -41,16 +55,44 @@
         }
     </style>
 </head>
-<body class="screen-1">
+<body>
     <div class="clickable-area" onclick="startTrial()"></div>
+    <div class="game-buttons" id="game-buttons">
+        <button onclick="chooseOption(1)">Option 1</button>
+        <button onclick="chooseOption(2)">Option 2</button>
+        <button onclick="chooseOption(3)">Option 3</button>
+    </div>
     <audio id="bg-music" loop>
         <source src="music.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
     <script>
         function startTrial() {
-            document.body.className = 'screen-2';
             document.body.style.backgroundImage = "url('screen-2.jpg')";
+        }
+        function showGameButtons() {
+            document.getElementById("game-buttons").style.display = "flex";
+        }
+        function chooseOption(option) {
+            if (option === 2 && document.body.style.backgroundImage.includes('screen-3.jpg')) {
+                document.body.style.backgroundImage = "url('screen-4.jpg')";
+            } else if (option === 3 && document.body.style.backgroundImage.includes('screen-4.jpg')) {
+                document.body.style.backgroundImage = "url('screen-5.jpg')";
+            } else if (option === 2 && document.body.style.backgroundImage.includes('screen-5.jpg')) {
+                document.body.style.backgroundImage = "url('screen-win.jpg')";
+                document.getElementById("game-buttons").style.display = "none";
+                let winButton = document.createElement('button');
+                winButton.textContent = "Claim Your Prize";
+                winButton.onclick = function() { window.location.href = 'https://drive.google.com'; };
+                document.body.appendChild(winButton);
+            } else {
+                document.body.style.backgroundImage = "url('screen-loose.jpg')";
+                document.getElementById("game-buttons").style.display = "none";
+                let retryButton = document.createElement('button');
+                retryButton.textContent = "Try Again";
+                retryButton.onclick = function() { document.body.style.backgroundImage = "url('screen-2.jpg')"; };
+                document.body.appendChild(retryButton);
+            }
         }
         function createParticles() {
             for (let i = 0; i < 30; i++) {
@@ -59,7 +101,7 @@
                 document.body.appendChild(particle);
                 particle.style.left = Math.random() * 100 + 'vw';
                 particle.style.top = Math.random() * -100 + 'vh';
-                particle.style.animationDuration = (Math.random() * 4 + 3) + 's';
+                particle.style.animationDuration = (Math.random() * 3 + 4) + 's';
                 particle.style.animationDelay = (Math.random() * 5) + 's';
             }
         }
