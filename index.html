@@ -95,7 +95,7 @@
             if (choice === answers[currentScreen]) {
                 correctAnswers++;
                 if (currentScreen === 5) {
-                    document.body.style.backgroundImage = correctAnswers === 3 ? "url('screen-win.jpg')" : "url('screen-lose.jpg')";
+                    document.body.style.backgroundImage = correctAnswers === 3 ? "url('screen-win.jpg')" : "url('screen-loose.jpg')";
                     options.innerHTML = '<button onclick="restartGame()">Try Again</button>';
                     options.style.display = 'block';
                 } else {
@@ -104,7 +104,7 @@
                     showOptions();
                 }
             } else {
-                document.body.style.backgroundImage = "url('screen-lose.jpg')";
+                document.body.style.backgroundImage = "url('screen-loose.jpg')";
                 options.innerHTML = '<button onclick="restartGame()">Try Again</button>';
                 options.style.display = 'block';
             }
