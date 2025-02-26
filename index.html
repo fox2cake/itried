@@ -18,14 +18,16 @@
         }
         .clickable-area {
             position: absolute;
-            top: 65%;
-            left: 50%;
-            width: 400px;
-            height: 60px;
-            transform: translate(-50%, -50%);
             cursor: pointer;
         }
-        .hidden { display: none; }
+        .hidden-button {
+            position: absolute;
+            width: 400px;
+            height: 60px;
+            cursor: pointer;
+            background: transparent;
+            border: none;
+        }
         .particle {
             position: absolute;
             width: 5px;
@@ -33,74 +35,88 @@
             background: rgba(255, 204, 0, 0.8);
             border-radius: 50%;
             opacity: 0;
-            animation: fall 7s infinite;
+            animation: fall 5s infinite;
         }
         @keyframes fall {
-            0% { transform: translateY(-100vh); opacity: 0; }
-            50% { opacity: 1; }
-            100% { transform: translateY(100vh); opacity: 0; }
+            0% {
+                transform: translateY(-100vh);
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
         }
     </style>
 </head>
 <body>
-    <div id="screen-1" class="clickable-area" onclick="changeScreen('screen-2', 'screen-2.jpg')"></div>
-    <div id="screen-2" class="clickable-area hidden" onclick="changeScreen('screen-3', 'screen-3.jpg')"></div>
-    <div id="screen-3" class="hidden">
-        <div class="clickable-area" style="left: 30%;" onclick="answer(1, false)"></div>
-        <div class="clickable-area" style="left: 50%;" onclick="answer(2, true)"></div>
-        <div class="clickable-area" style="left: 70%;" onclick="answer(3, false)"></div>
-    </div>
-    <div id="screen-4" class="hidden">
-        <div class="clickable-area" style="left: 30%;" onclick="answer(1, false)"></div>
-        <div class="clickable-area" style="left: 50%;" onclick="answer(2, false)"></div>
-        <div class="clickable-area" style="left: 70%;" onclick="answer(3, true)"></div>
-    </div>
-    <div id="screen-5" class="hidden">
-        <div class="clickable-area" style="left: 30%;" onclick="answer(1, false)"></div>
-        <div class="clickable-area" style="left: 50%;" onclick="answer(2, true)"></div>
-        <div class="clickable-area" style="left: 70%;" onclick="answer(3, false)"></div>
-    </div>
-    <div id="screen-win" class="hidden">
-        <a href="https://drive.google.com/your-link" class="clickable-area"></a>
-    </div>
-    <div id="screen-loose" class="hidden">
-        <div class="clickable-area" onclick="changeScreen('screen-2', 'screen-2.jpg')"></div>
-    </div>
     <audio id="bg-music" loop>
         <source src="music.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
     </audio>
+
+    <button id="screen1-btn" class="hidden-button" style="top: 65%; left: 50%; transform: translate(-50%, -50%);" onclick="changeScreen(2)"></button>
+    <button id="screen2-btn" class="hidden-button" style="top: 65%; left: 50%; transform: translate(-50%, -50%); display: none;" onclick="changeScreen(3)"></button>
+    
+    <button id="screen3-btn1" class="hidden-button" style="top: 55%; left: 50%; transform: translate(-50%, -50%); display: none;" onclick="selectAnswer(1)"></button>
+    <button id="screen3-btn2" class="hidden-button" style="top: 65%; left: 50%; transform: translate(-50%, -50%); display: none;" onclick="selectAnswer(2)"></button>
+    <button id="screen3-btn3" class="hidden-button" style="top: 75%; left: 50%; transform: translate(-50%, -50%); display: none;" onclick="selectAnswer(3)"></button>
+    
+    <button id="win-btn" class="hidden-button" style="top: 65%; left: 50%; transform: translate(-50%, -50%); display: none;" onclick="window.location.href='https://drive.google.com/'"></button>
+    <button id="lose-btn" class="hidden-button" style="top: 65%; left: 50%; transform: translate(-50%, -50%); display: none;" onclick="changeScreen(2)"></button>
+
     <script>
-        let incorrectAnswers = 0;
-        function changeScreen(screenId, bg) {
-            document.body.style.backgroundImage = `url(${bg})`;
-            document.querySelectorAll('div').forEach(el => el.classList.add('hidden'));
-            document.getElementById(screenId).classList.remove('hidden');
-        }
-        function answer(question, correct) {
-            if (!correct) incorrectAnswers++;
-            if (question === 1) changeScreen('screen-4', 'screen-3.jpg');
-            else if (question === 2) changeScreen('screen-5', 'screen-3.jpg');
-            else {
-                if (incorrectAnswers > 0) changeScreen('screen-loose', 'screen-loose.jpg');
-                else changeScreen('screen-win', 'screen-win.jpg');
-            }
-        }
+        let incorrectAnswer = false;
         document.addEventListener('click', function() {
             let audio = document.getElementById('bg-music');
-            if (audio.paused) audio.play();
+            if (audio.paused) {
+                audio.play();
+            }
         });
-        function createParticles() {
-            for (let i = 0; i < 30; i++) {
-                let particle = document.createElement('div');
-                particle.classList.add('particle');
-                document.body.appendChild(particle);
-                particle.style.left = Math.random() * 100 + 'vw';
-                particle.style.top = Math.random() * -100 + 'vh';
-                particle.style.animationDuration = (Math.random() * 4 + 3) + 's';
-                particle.style.animationDelay = (Math.random() * 5) + 's';
+
+        function changeScreen(screenNumber) {
+            if (screenNumber === 2) {
+                document.body.style.backgroundImage = "url('screen-2.jpg')";
+                document.getElementById('screen1-btn').style.display = 'none';
+                document.getElementById('screen2-btn').style.display = 'block';
+            } else if (screenNumber === 3) {
+                document.body.style.backgroundImage = "url('screen-3.jpg')";
+                document.getElementById('screen2-btn').style.display = 'none';
+                document.getElementById('screen3-btn1').style.display = 'block';
+                document.getElementById('screen3-btn2').style.display = 'block';
+                document.getElementById('screen3-btn3').style.display = 'block';
+            } else if (screenNumber === 4) {
+                document.body.style.backgroundImage = "url('screen-4.jpg')";
+            } else if (screenNumber === 5) {
+                document.body.style.backgroundImage = "url('screen-5.jpg')";
+            } else if (screenNumber === 'win') {
+                document.body.style.backgroundImage = "url('screen-win.jpg')";
+                document.getElementById('win-btn').style.display = 'block';
+            } else if (screenNumber === 'lose') {
+                document.body.style.backgroundImage = "url('screen-loose.jpg')";
+                document.getElementById('lose-btn').style.display = 'block';
             }
         }
-        createParticles();
+
+        function selectAnswer(answer) {
+            if (answer === 1) {
+                incorrectAnswer = true;
+            }
+            if (answer === 3) {
+                changeScreen(4);
+            } else if (answer === 4) {
+                changeScreen(5);
+            } else if (answer === 5) {
+                if (incorrectAnswer) {
+                    changeScreen('lose');
+                } else {
+                    changeScreen('win');
+                }
+            }
+        }
     </script>
 </body>
 </html>
