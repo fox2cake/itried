@@ -14,29 +14,17 @@
             text-align: center;
             position: relative;
             overflow: hidden;
-            transition: background 1s ease-in-out;
         }
         .clickable-area {
             position: absolute;
             cursor: pointer;
-            background: rgba(255, 0, 0, 0.5); /* ВРЕМЕННО ДЕЛАЕТ КНОПКИ ВИДИМЫМИ */
+            display: none; /* Скрываем кнопки по умолчанию */
         }
-        .screen-1-button {
-            top: 65%;
-            left: 50%;
-            width: 400px;
-            height: 60px;
-            transform: translate(-50%, -50%);
+        .screen-3 .clickable-area, 
+        .screen-4 .clickable-area, 
+        .screen-5 .clickable-area {
+            display: block; /* Показываем кнопки только на нужных экранах */
         }
-        .screen-3-button-1 { top: 55%; left: 30%; width: 200px; height: 50px; }
-        .screen-3-button-2 { top: 65%; left: 50%; width: 200px; height: 50px; }
-        .screen-3-button-3 { top: 75%; left: 70%; width: 200px; height: 50px; }
-        .screen-4-button-1 { top: 55%; left: 30%; width: 200px; height: 50px; }
-        .screen-4-button-2 { top: 65%; left: 50%; width: 200px; height: 50px; }
-        .screen-4-button-3 { top: 75%; left: 70%; width: 200px; height: 50px; }
-        .screen-5-button-1 { top: 55%; left: 30%; width: 200px; height: 50px; }
-        .screen-5-button-2 { top: 65%; left: 50%; width: 200px; height: 50px; }
-        .screen-5-button-3 { top: 75%; left: 70%; width: 200px; height: 50px; }
         .particle {
             position: absolute;
             width: 5px;
@@ -53,47 +41,17 @@
         }
     </style>
 </head>
-<body>
-    <audio id="bg-music" loop autoplay>
+<body class="screen-1">
+    <div class="clickable-area" onclick="startTrial()"></div>
+    <audio id="bg-music" loop>
         <source src="music.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
-    
-    <div class="clickable-area screen-1-button" onclick="nextScreen('screen-2.jpg')"></div>
-    <div class="clickable-area screen-3-button-1" onclick="answerQuestion(3, 1)"></div>
-    <div class="clickable-area screen-3-button-2" onclick="answerQuestion(3, 2)"></div>
-    <div class="clickable-area screen-3-button-3" onclick="answerQuestion(3, 3)"></div>
-    <div class="clickable-area screen-4-button-1" onclick="answerQuestion(4, 1)"></div>
-    <div class="clickable-area screen-4-button-2" onclick="answerQuestion(4, 2)"></div>
-    <div class="clickable-area screen-4-button-3" onclick="answerQuestion(4, 3)"></div>
-    <div class="clickable-area screen-5-button-1" onclick="answerQuestion(5, 1)"></div>
-    <div class="clickable-area screen-5-button-2" onclick="answerQuestion(5, 2)"></div>
-    <div class="clickable-area screen-5-button-3" onclick="answerQuestion(5, 3)"></div>
-    
     <script>
-        function nextScreen(screen) {
-            document.body.style.backgroundImage = `url('${screen}')`;
+        function startTrial() {
+            document.body.className = 'screen-2';
+            document.body.style.backgroundImage = "url('screen-2.jpg')";
         }
-        
-        let correctAnswers = {3: 2, 4: 3, 5: 2};
-        let progress = [];
-
-        function answerQuestion(screen, choice) {
-            progress.push(choice === correctAnswers[screen]);
-            if (screen === 5) {
-                let resultScreen = progress.every(ans => ans) ? 'screen-win.jpg' : 'screen-loose.jpg';
-                setTimeout(() => {
-                    document.body.style.backgroundImage = `url('${resultScreen}')`;
-                    if (resultScreen === 'screen-loose.jpg') {
-                        setTimeout(() => nextScreen('screen-2.jpg'), 2000);
-                    }
-                    progress = [];
-                }, 500);
-            } else {
-                nextScreen(`screen-${screen + 1}.jpg`);
-            }
-        }
-
         function createParticles() {
             for (let i = 0; i < 30; i++) {
                 let particle = document.createElement('div');
@@ -101,12 +59,11 @@
                 document.body.appendChild(particle);
                 particle.style.left = Math.random() * 100 + 'vw';
                 particle.style.top = Math.random() * -100 + 'vh';
-                particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                particle.style.animationDuration = (Math.random() * 4 + 3) + 's';
                 particle.style.animationDelay = (Math.random() * 5) + 's';
             }
         }
         createParticles();
-
         document.addEventListener('click', function() {
             let audio = document.getElementById('bg-music');
             if (audio.paused) {
