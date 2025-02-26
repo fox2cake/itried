@@ -14,27 +14,95 @@
             text-align: center;
             position: relative;
             overflow: hidden;
+            transition: background 0.5s ease-in-out;
         }
         .clickable-area {
             position: absolute;
-            top: 60%;
-            left: 50%;
-            width: 450px;
-            height: 120px;
-            transform: translate(-50%, -50%);
             cursor: pointer;
+        }
+        /* Координаты кнопок для каждого экрана */
+        .screen-1 { top: 65%; left: 50%; width: 400px; height: 60px; transform: translate(-50%, -50%); }
+        .screen-2 { top: 65%; left: 50%; width: 400px; height: 60px; transform: translate(-50%, -50%); }
+        .screen-3-1 { top: 50%; left: 30%; width: 200px; height: 50px; }
+        .screen-3-2 { top: 50%; left: 50%; width: 200px; height: 50px; }
+        .screen-3-3 { top: 50%; left: 70%; width: 200px; height: 50px; }
+        .screen-4-1 { top: 50%; left: 30%; width: 200px; height: 50px; }
+        .screen-4-2 { top: 50%; left: 50%; width: 200px; height: 50px; }
+        .screen-4-3 { top: 50%; left: 70%; width: 200px; height: 50px; }
+        .screen-5-1 { top: 50%; left: 30%; width: 200px; height: 50px; }
+        .screen-5-2 { top: 50%; left: 50%; width: 200px; height: 50px; }
+        .screen-5-3 { top: 50%; left: 70%; width: 200px; height: 50px; }
+        .hidden { display: none; }
+        .particle {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 204, 0, 0.8);
+            border-radius: 50%;
+            opacity: 0;
+            animation: fall 7s infinite;
+        }
+        @keyframes fall {
+            0% { transform: translateY(-100vh); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateY(100vh); opacity: 0; }
         }
     </style>
 </head>
 <body>
-    <div class="clickable-area" onclick="startTrial()"></div>
+    <audio id="bg-music" loop>
+        <source src="music.mp3" type="audio/mpeg">
+    </audio>
     
-    <iframe src="music.html" style="display: none;" id="music-frame"></iframe>
-
+    <div id="button-container">
+        <div class="clickable-area screen-1" onclick="nextScreen('screen-2.jpg', 'screen-2')"></div>
+        <div class="clickable-area screen-2 hidden" onclick="nextScreen('screen-3.jpg', 'screen-3')"></div>
+        <div class="clickable-area screen-3-1 hidden" onclick="wrongAnswer()"></div>
+        <div class="clickable-area screen-3-2 hidden" onclick="nextScreen('screen-4.jpg', 'screen-4', true)"></div>
+        <div class="clickable-area screen-3-3 hidden" onclick="wrongAnswer()"></div>
+        <div class="clickable-area screen-4-1 hidden" onclick="wrongAnswer()"></div>
+        <div class="clickable-area screen-4-2 hidden" onclick="wrongAnswer()"></div>
+        <div class="clickable-area screen-4-3 hidden" onclick="nextScreen('screen-5.jpg', 'screen-5', true)"></div>
+        <div class="clickable-area screen-5-1 hidden" onclick="wrongAnswer()"></div>
+        <div class="clickable-area screen-5-2 hidden" onclick="nextScreen('screen-win.jpg', 'win', true)"></div>
+        <div class="clickable-area screen-5-3 hidden" onclick="wrongAnswer()"></div>
+    </div>
+    
     <script>
-        function startTrial() {
-            window.location.href = 'screen-2.html';
+        let correctAnswers = 0;
+
+        function nextScreen(image, nextClass, isCorrect = false) {
+            document.body.style.backgroundImage = `url('${image}')`;
+            document.querySelectorAll('.clickable-area').forEach(btn => btn.classList.add('hidden'));
+            document.querySelectorAll(`.${nextClass}`).forEach(btn => btn.classList.remove('hidden'));
+            if (isCorrect) correctAnswers++;
+            if (nextClass === 'win' && correctAnswers < 3) wrongAnswer();
         }
+
+        function wrongAnswer() {
+            correctAnswers = 0;
+            nextScreen('screen-loose.jpg', 'screen-2');
+        }
+        
+        function createParticles() {
+            for (let i = 0; i < 30; i++) {
+                let particle = document.createElement('div');
+                particle.classList.add('particle');
+                document.body.appendChild(particle);
+                particle.style.left = Math.random() * 100 + 'vw';
+                particle.style.top = Math.random() * -100 + 'vh';
+                particle.style.animationDuration = (Math.random() * 3 + 4) + 's';
+                particle.style.animationDelay = (Math.random() * 5) + 's';
+            }
+        }
+        createParticles();
+
+        document.addEventListener('click', function() {
+            let audio = document.getElementById('bg-music');
+            if (audio.paused) {
+                audio.play();
+            }
+        });
     </script>
 </body>
 </html>
