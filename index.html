@@ -14,6 +14,7 @@
             text-align: center;
             position: relative;
             overflow: hidden;
+            transition: background 1s ease-in-out;
         }
         .clickable-area {
             position: absolute;
@@ -24,22 +25,7 @@
             transform: translate(-50%, -50%);
             cursor: pointer;
         }
-        .option-buttons {
-            display: none;
-            position: absolute;
-            left: 10%;
-            top: 50%;
-            transform: translateY(-50%);
-        }
-        .option-buttons button {
-            display: block;
-            margin: 10px 0;
-            padding: 10px;
-            background: rgba(0, 0, 0, 0.7);
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
+        .hidden { display: none; }
         .particle {
             position: absolute;
             width: 5px;
@@ -47,7 +33,7 @@
             background: rgba(255, 204, 0, 0.8);
             border-radius: 50%;
             opacity: 0;
-            animation: fall 5s infinite;
+            animation: fall 7s infinite;
         }
         @keyframes fall {
             0% { transform: translateY(-100vh); opacity: 0; }
@@ -57,69 +43,51 @@
     </style>
 </head>
 <body>
-    <div class="clickable-area" onclick="startTrial()"></div>
-    <div class="option-buttons" id="options"></div>
+    <div id="screen-1" class="clickable-area" onclick="changeScreen('screen-2', 'screen-2.jpg')"></div>
+    <div id="screen-2" class="clickable-area hidden" onclick="changeScreen('screen-3', 'screen-3.jpg')"></div>
+    <div id="screen-3" class="hidden">
+        <div class="clickable-area" style="left: 30%;" onclick="answer(1, false)"></div>
+        <div class="clickable-area" style="left: 50%;" onclick="answer(2, true)"></div>
+        <div class="clickable-area" style="left: 70%;" onclick="answer(3, false)"></div>
+    </div>
+    <div id="screen-4" class="hidden">
+        <div class="clickable-area" style="left: 30%;" onclick="answer(1, false)"></div>
+        <div class="clickable-area" style="left: 50%;" onclick="answer(2, false)"></div>
+        <div class="clickable-area" style="left: 70%;" onclick="answer(3, true)"></div>
+    </div>
+    <div id="screen-5" class="hidden">
+        <div class="clickable-area" style="left: 30%;" onclick="answer(1, false)"></div>
+        <div class="clickable-area" style="left: 50%;" onclick="answer(2, true)"></div>
+        <div class="clickable-area" style="left: 70%;" onclick="answer(3, false)"></div>
+    </div>
+    <div id="screen-win" class="hidden">
+        <a href="https://drive.google.com/your-link" class="clickable-area"></a>
+    </div>
+    <div id="screen-loose" class="hidden">
+        <div class="clickable-area" onclick="changeScreen('screen-2', 'screen-2.jpg')"></div>
+    </div>
     <audio id="bg-music" loop>
         <source src="music.mp3" type="audio/mpeg">
     </audio>
     <script>
-        let currentScreen = 1;
-        let correctAnswers = 0;
-        const answers = { 3: 2, 4: 3, 5: 2 };
-        function startTrial() {
-            if (currentScreen === 1) {
-                document.body.style.backgroundImage = "url('screen-2.jpg')";
-                currentScreen = 2;
-            } else if (currentScreen === 2) {
-                document.body.style.backgroundImage = "url('screen-3.jpg')";
-                currentScreen = 3;
-                showOptions();
-            }
+        let incorrectAnswers = 0;
+        function changeScreen(screenId, bg) {
+            document.body.style.backgroundImage = `url(${bg})`;
+            document.querySelectorAll('div').forEach(el => el.classList.add('hidden'));
+            document.getElementById(screenId).classList.remove('hidden');
         }
-        function showOptions() {
-            let options = document.getElementById('options');
-            options.innerHTML = '';
-            if (currentScreen >= 3 && currentScreen <= 5) {
-                for (let i = 1; i <= 3; i++) {
-                    let btn = document.createElement('button');
-                    btn.innerText = `Option ${i}`;
-                    btn.onclick = () => checkAnswer(i);
-                    options.appendChild(btn);
-                }
-                options.style.display = 'block';
-            } else {
-                options.style.display = 'none';
+        function answer(question, correct) {
+            if (!correct) incorrectAnswers++;
+            if (question === 1) changeScreen('screen-4', 'screen-3.jpg');
+            else if (question === 2) changeScreen('screen-5', 'screen-3.jpg');
+            else {
+                if (incorrectAnswers > 0) changeScreen('screen-loose', 'screen-loose.jpg');
+                else changeScreen('screen-win', 'screen-win.jpg');
             }
-        }
-        function checkAnswer(choice) {
-            if (choice === answers[currentScreen]) {
-                correctAnswers++;
-                if (currentScreen === 5) {
-                    document.body.style.backgroundImage = correctAnswers === 3 ? "url('screen-win.jpg')" : "url('screen-loose.jpg')";
-                    options.innerHTML = '<button onclick="restartGame()">Try Again</button>';
-                    options.style.display = 'block';
-                } else {
-                    currentScreen++;
-                    document.body.style.backgroundImage = `url('screen-${currentScreen}.jpg')`;
-                    showOptions();
-                }
-            } else {
-                document.body.style.backgroundImage = "url('screen-loose.jpg')";
-                options.innerHTML = '<button onclick="restartGame()">Try Again</button>';
-                options.style.display = 'block';
-            }
-        }
-        function restartGame() {
-            currentScreen = 2;
-            correctAnswers = 0;
-            document.body.style.backgroundImage = "url('screen-2.jpg')";
-            showOptions();
         }
         document.addEventListener('click', function() {
             let audio = document.getElementById('bg-music');
-            if (audio.paused) {
-                audio.play();
-            }
+            if (audio.paused) audio.play();
         });
         function createParticles() {
             for (let i = 0; i < 30; i++) {
@@ -128,7 +96,7 @@
                 document.body.appendChild(particle);
                 particle.style.left = Math.random() * 100 + 'vw';
                 particle.style.top = Math.random() * -100 + 'vh';
-                particle.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                particle.style.animationDuration = (Math.random() * 4 + 3) + 's';
                 particle.style.animationDelay = (Math.random() * 5) + 's';
             }
         }
