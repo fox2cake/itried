@@ -24,19 +24,18 @@
             transform: translate(-50%, -50%);
             cursor: pointer;
         }
-        .game-buttons {
+        .choice-buttons {
             display: none;
             position: absolute;
-            left: 10%;
             top: 50%;
+            left: 10%;
             transform: translateY(-50%);
-            display: flex;
             flex-direction: column;
-            gap: 15px;
         }
-        .game-buttons button {
-            width: 200px;
-            height: 50px;
+        .choice-buttons button {
+            margin: 10px 0;
+            padding: 10px;
+            font-size: 18px;
             cursor: pointer;
         }
         .particle {
@@ -46,7 +45,7 @@
             background: rgba(255, 204, 0, 0.8);
             border-radius: 50%;
             opacity: 0;
-            animation: fall 7s infinite;
+            animation: fall 5s infinite;
         }
         @keyframes fall {
             0% { transform: translateY(-100vh); opacity: 0; }
@@ -57,41 +56,41 @@
 </head>
 <body>
     <div class="clickable-area" onclick="startTrial()"></div>
-    <div class="game-buttons" id="game-buttons">
-        <button onclick="chooseOption(1)">Option 1</button>
-        <button onclick="chooseOption(2)">Option 2</button>
-        <button onclick="chooseOption(3)">Option 3</button>
+    <div class="choice-buttons" id="choice-buttons">
+        <button onclick="chooseAnswer(1)">Option 1</button>
+        <button onclick="chooseAnswer(2)">Option 2</button>
+        <button onclick="chooseAnswer(3)">Option 3</button>
     </div>
     <audio id="bg-music" loop>
         <source src="music.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
     <script>
+        let currentScreen = 1;
         function startTrial() {
-            document.body.style.backgroundImage = "url('screen-2.jpg')";
+            currentScreen = 2;
+            updateScreen();
         }
-        function showGameButtons() {
-            document.getElementById("game-buttons").style.display = "flex";
-        }
-        function chooseOption(option) {
-            if (option === 2 && document.body.style.backgroundImage.includes('screen-3.jpg')) {
-                document.body.style.backgroundImage = "url('screen-4.jpg')";
-            } else if (option === 3 && document.body.style.backgroundImage.includes('screen-4.jpg')) {
-                document.body.style.backgroundImage = "url('screen-5.jpg')";
-            } else if (option === 2 && document.body.style.backgroundImage.includes('screen-5.jpg')) {
-                document.body.style.backgroundImage = "url('screen-win.jpg')";
-                document.getElementById("game-buttons").style.display = "none";
-                let winButton = document.createElement('button');
-                winButton.textContent = "Claim Your Prize";
-                winButton.onclick = function() { window.location.href = 'https://drive.google.com'; };
-                document.body.appendChild(winButton);
+        function chooseAnswer(choice) {
+            if (currentScreen === 3 && choice === 2) {
+                currentScreen = 4;
+            } else if (currentScreen === 4 && choice === 3) {
+                currentScreen = 5;
+            } else if (currentScreen === 5 && choice === 2) {
+                currentScreen = 'win';
             } else {
-                document.body.style.backgroundImage = "url('screen-loose.jpg')";
-                document.getElementById("game-buttons").style.display = "none";
-                let retryButton = document.createElement('button');
-                retryButton.textContent = "Try Again";
-                retryButton.onclick = function() { document.body.style.backgroundImage = "url('screen-2.jpg')"; };
-                document.body.appendChild(retryButton);
+                currentScreen = 'lose';
+            }
+            updateScreen();
+        }
+        function updateScreen() {
+            document.body.style.backgroundImage = `url('screen-${currentScreen}.jpg')`;
+            document.getElementById('choice-buttons').style.display = (currentScreen >= 3 && currentScreen <= 5) ? 'flex' : 'none';
+            if (currentScreen === 'win') {
+                window.location.href = 'https://drive.google.com/your-link';
+            } else if (currentScreen === 'lose') {
+                currentScreen = 2;
+                updateScreen();
             }
         }
         function createParticles() {
@@ -101,7 +100,7 @@
                 document.body.appendChild(particle);
                 particle.style.left = Math.random() * 100 + 'vw';
                 particle.style.top = Math.random() * -100 + 'vh';
-                particle.style.animationDuration = (Math.random() * 3 + 4) + 's';
+                particle.style.animationDuration = (Math.random() * 3 + 2) + 's';
                 particle.style.animationDelay = (Math.random() * 5) + 's';
             }
         }
