@@ -1,129 +1,58 @@
-/* Общие стили */
-.app {
-  position: relative;
-  height: 100vh;
-  width: 100vw;
-  overflow: hidden;
-  background-color: #000; /* Черный фон для приложения */
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    font-family: 'MedievalSharp', cursive;
+    background-color: #1a0e2d;
 }
 
-/* Анимация для экрана */
-.screen {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  opacity: 0; /* Изначальная непрозрачность экрана */
-  transition: opacity 1s ease-in-out; /* Плавное появление экрана */
+#background {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    transition: opacity 1s ease-in-out;
 }
 
-/* Стиль для каждого экрана */
-.screen-1 {
-  background-color: #ff6f61; /* Красный для первого экрана */
+.hidden {
+    display: none;
 }
 
-.screen-2 {
-  background-color: #6a9eeb; /* Синий для второго экрана */
+.button {
+    position: absolute;
+    width: 20vw;
+    height: 5vh;
+    background: transparent;
+    border: none;
+    cursor: pointer;
 }
 
-.screen-3 {
-  background-color: #f4a261; /* Оранжевый для третьего экрана */
+#button1 { top: 75%; left: 40%; }
+#button2 { top: 75%; left: 40%; }
+
+/* Screen-3, 4, 5 - три невидимые кнопки */
+#button3-1 { top: 50%; left: 30%; }
+#button3-2 { top: 60%; left: 30%; }
+#button3-3 { top: 70%; left: 30%; }
+
+/* Экран победы и поражения */
+#win-button { top: 80%; left: 40%; }
+#lose-button { top: 80%; left: 40%; }
+
+/* Пылинки */
+.snowflake {
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    background: white;
+    border-radius: 50%;
+    opacity: 0.7;
+    pointer-events: none;
+    animation: snowfall linear infinite;
 }
 
-.screen-4 {
-  background-color: #2a9d8f; /* Зеленый для четвертого экрана */
-}
-
-.screen-5 {
-  background-color: #e9c46a; /* Желтый для пятого экрана */
-}
-
-.screen-win {
-  background-color: #2b9348; /* Зеленый для экрана победы */
-}
-
-.screen-loose {
-  background-color: #e76f51; /* Красный для экрана проигрыша */
-}
-
-/* Стили для кнопок */
-.invisible-button {
-  position: absolute;
-  width: 150px;
-  height: 50px;
-  background-color: rgba(0, 0, 0, 0); /* Прозрачная кнопка */
-  border: none;
-  cursor: pointer;
-}
-
-/* Размещение кнопок на экране */
-.screen-1 .invisible-button {
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.screen-2 .invisible-button {
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.screen-3 .invisible-button {
-  top: 40%;
-  left: 30%;
-}
-
-.screen-3 .invisible-button:nth-child(2) {
-  top: 50%;
-  left: 30%;
-}
-
-.screen-3 .invisible-button:nth-child(3) {
-  top: 60%;
-  left: 30%;
-}
-
-.screen-4 .invisible-button {
-  top: 40%;
-  left: 30%;
-}
-
-.screen-4 .invisible-button:nth-child(2) {
-  top: 50%;
-  left: 30%;
-}
-
-.screen-4 .invisible-button:nth-child(3) {
-  top: 60%;
-  left: 30%;
-}
-
-.screen-5 .invisible-button {
-  top: 40%;
-  left: 30%;
-}
-
-.screen-5 .invisible-button:nth-child(2) {
-  top: 50%;
-  left: 30%;
-}
-
-.screen-5 .invisible-button:nth-child(3) {
-  top: 60%;
-  left: 30%;
-}
-
-/* Стили для экрана с частицами */
-.particles {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none; /* Частицы не мешают взаимодействию с другими элементами */
-  background: url('particles-image.png') no-repeat center center;
-  background-size: cover;
+@keyframes snowfall {
+    from { transform: translateY(-10px); opacity: 1; }
+    to { transform: translateY(100vh); opacity: 0; }
 }
