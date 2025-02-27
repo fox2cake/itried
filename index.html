@@ -1,75 +1,44 @@
-import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import "./styles.css";
-
-const screens = ["screen-1", "screen-2", "screen-3", "screen-4", "screen-5", "screen-win", "screen-loose"];
-
-export default function App() {
-  const [currentScreen, setCurrentScreen] = useState("screen-1");
-  const [wrongAnswers, setWrongAnswers] = useState(0);
-
-  useEffect(() => {
-    const audio = document.getElementById("bg-music");
-    if (audio) {
-      audio.volume = 0.5;
-      audio.play().catch(() => {});
-    }
-  }, []);
-
-  const handleNextScreen = (nextScreen) => {
-    if (screens.includes(nextScreen)) {
-      setCurrentScreen(nextScreen);
-    }
-  };
-
-  const handleAnswer = (isCorrect) => {
-    if (!isCorrect) {
-      setWrongAnswers((prev) => prev + 1);
-    }
-    if (currentScreen === "screen-3") handleNextScreen("screen-4");
-    else if (currentScreen === "screen-4") handleNextScreen("screen-5");
-    else if (currentScreen === "screen-5") {
-      if (wrongAnswers > 0) handleNextScreen("screen-loose");
-      else handleNextScreen("screen-win");
-    }
-  };
-
-  return (
-    <div className="app">
-      <audio id="bg-music" src="/background-music.mp3" loop />
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={currentScreen}
-          className={`screen ${currentScreen}`}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 1 }}
-        >
-          {currentScreen === "screen-1" && (
-            <button className="invisible-button" onClick={() => handleNextScreen("screen-2")} style={{ top: "50%", left: "50%" }} />
-          )}
-          {currentScreen === "screen-2" && (
-            <button className="invisible-button" onClick={() => handleNextScreen("screen-3")} style={{ top: "50%", left: "50%" }} />
-          )}
-          {["screen-3", "screen-4", "screen-5"].includes(currentScreen) && (
-            <>
-              <button className="invisible-button" onClick={() => handleAnswer(true)} style={{ top: "40%", left: "30%" }} />
-              <button className="invisible-button" onClick={() => handleAnswer(false)} style={{ top: "50%", left: "30%" }} />
-              <button className="invisible-button" onClick={() => handleAnswer(false)} style={{ top: "60%", left: "30%" }} />
-            </>
-          )}
-          {currentScreen === "screen-win" && (
-            <a href="https://drive.google.com" target="_blank" rel="noopener noreferrer">
-              <button className="invisible-button" style={{ top: "50%", left: "50%" }} />
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The King's Trial</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <audio id="bg-music" src="music.mp3" loop></audio>
+    <div id="game-container">
+        <div id="screen" class="screen screen-1">
+            <button class="invisible-button" data-next="screen-2" style="top: 50%; left: 50%"></button>
+        </div>
+        <div id="screen-2" class="screen screen-2 hidden">
+            <button class="invisible-button" data-next="screen-3" style="top: 50%; left: 50%"></button>
+        </div>
+        <div id="screen-3" class="screen screen-3 hidden">
+            <button class="invisible-button" data-answer="correct" style="top: 40%; left: 30%"></button>
+            <button class="invisible-button" data-answer="wrong" style="top: 50%; left: 30%"></button>
+            <button class="invisible-button" data-answer="wrong" style="top: 60%; left: 30%"></button>
+        </div>
+        <div id="screen-4" class="screen screen-4 hidden">
+            <button class="invisible-button" data-answer="correct" style="top: 40%; left: 30%"></button>
+            <button class="invisible-button" data-answer="wrong" style="top: 50%; left: 30%"></button>
+            <button class="invisible-button" data-answer="wrong" style="top: 60%; left: 30%"></button>
+        </div>
+        <div id="screen-5" class="screen screen-5 hidden">
+            <button class="invisible-button" data-answer="correct" style="top: 40%; left: 30%"></button>
+            <button class="invisible-button" data-answer="wrong" style="top: 50%; left: 30%"></button>
+            <button class="invisible-button" data-answer="wrong" style="top: 60%; left: 30%"></button>
+        </div>
+        <div id="screen-win" class="screen screen-win hidden">
+            <a href="https://drive.google.com" target="_blank">
+                <button class="invisible-button" style="top: 50%; left: 50%"></button>
             </a>
-          )}
-          {currentScreen === "screen-loose" && (
-            <button className="invisible-button" onClick={() => handleNextScreen("screen-2")} style={{ top: "50%", left: "50%" }} />
-          )}
-        </motion.div>
-      </AnimatePresence>
-      <div className="particles" />
+        </div>
+        <div id="screen-loose" class="screen screen-loose hidden">
+            <button class="invisible-button" data-next="screen-2" style="top: 50%; left: 50%"></button>
+        </div>
     </div>
-  );
-}
+    <script src="script.js"></script>
+</body>
+</html>
