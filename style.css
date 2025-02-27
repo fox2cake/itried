@@ -43,15 +43,6 @@ body {
     animation: fall linear infinite;
 }
 
-body {
-    margin: 0;
-    padding: 0;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    transition: background-image 1s ease-in-out;
-}
-
 .screen-1 {
     background-image: url("screen-1.jpg");
 }
