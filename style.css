@@ -34,7 +34,7 @@ body {
 /* Общие стили для кнопок */
 .invisible-button {
     position: absolute;
-    width: 20%; /* Ширина кнопки */
+    width: 70%; /* Ширина кнопки */
     height: 10%; /* Высота кнопки */
     background: transparent;
     border: none;
@@ -44,12 +44,12 @@ body {
 
 /* Кнопка для screen-1 */
 #screen-1 .invisible-button {
-    top: 50%; /* Позиция по вертикали */
+    top: 55%; /* Позиция по вертикали */
     left: 40%; /* Позиция по горизонтали */
 }
 
 #screen-2 .invisible-button {
-    top: 70%; /* Позиция по вертикали */
+    top: 55%; /* Позиция по вертикали */
     left: 40%; /* Позиция по горизонтали */
 }
 
