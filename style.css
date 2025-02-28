@@ -81,26 +81,12 @@ body {
 
 /* Позиции кнопок для screen-loose */
 #screen-loose .invisible-button {
-    top: 83%; /* Позиция по вертикали */
-    left: 41%; /* Позиция по горизонтали */
+    top: 85%; /* Позиция по вертикали */
+    left: 40%; /* Позиция по горизонтали */
 }
 
 /* Позиции кнопок для screen-win */
 #screen-win .invisible-button {
-    top: 83%; /* Позиция по вертикали */
-    left: 41%; /* Позиция по горизонтали */
-}
-
-.particle {
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    background: white;
-    border-radius: 50%;
-    animation: float linear infinite;
-}
-
-@keyframes float {
-    0% { transform: translateY(0); }
-    100% { transform: translateY(-100vh); }
+    top: 85%; /* Позиция по вертикали */
+    left: 40%; /* Позиция по горизонтали */
 }
