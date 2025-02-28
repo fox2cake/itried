@@ -8,7 +8,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     document.addEventListener("click", playMusic);
-});
 
     // Переключение экранов
     function showScreen(id) {
