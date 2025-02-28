@@ -33,32 +33,39 @@ body {
 
 .invisible-button {
     position: absolute;
-    width: 20%;
-    height: 10%;
+    width: 25%; /* Ширина кнопки */
+    height: 12%; /* Высота кнопки */
     background: transparent;
     border: none;
     cursor: pointer;
 }
 
-#screen-1 .invisible-button { top: 70%; left: 40%; }
-#screen-2 .invisible-button { top: 70%; left: 40%; }
-#screen-3 .invisible-button:nth-child(1) { top: 60%; left: 30%; }
-#screen-3 .invisible-button:nth-child(2) { top: 60%; left: 50%; }
-#screen-3 .invisible-button:nth-child(3) { top: 60%; left: 70%; }
-#screen-4 .invisible-button:nth-child(1) { top: 60%; left: 30%; }
-#screen-4 .invisible-button:nth-child(2) { top: 60%; left: 50%; }
-#screen-4 .invisible-button:nth-child(3) { top: 60%; left: 70%; }
-#screen-5 .invisible-button:nth-child(1) { top: 60%; left: 30%; }
-#screen-5 .invisible-button:nth-child(2) { top: 60%; left: 50%; }
-#screen-5 .invisible-button:nth-child(3) { top: 60%; left: 70%; }
+/* Кнопки для screen-3 */
+#screen-3 .invisible-button:nth-child(1) { top: 30%; left: 10%; }
+#screen-3 .invisible-button:nth-child(2) { top: 50%; left: 10%; }
+#screen-3 .invisible-button:nth-child(3) { top: 70%; left: 10%; }
+
+/* Кнопки для screen-4 */
+#screen-4 .invisible-button:nth-child(1) { top: 30%; left: 10%; }
+#screen-4 .invisible-button:nth-child(2) { top: 50%; left: 10%; }
+#screen-4 .invisible-button:nth-child(3) { top: 70%; left: 10%; }
+
+/* Кнопки для screen-5 */
+#screen-5 .invisible-button:nth-child(1) { top: 30%; left: 10%; }
+#screen-5 .invisible-button:nth-child(2) { top: 50%; left: 10%; }
+#screen-5 .invisible-button:nth-child(3) { top: 70%; left: 10%; }
+
+/* Кнопки для screen-win и screen-loose */
 #screen-win .invisible-button { top: 80%; left: 40%; }
 #screen-loose .invisible-button { top: 80%; left: 40%; }
 
+/* Стили для частиц */
 #particles {
     position: absolute;
     width: 100vw;
     height: 100vh;
     pointer-events: none;
+    overflow: hidden;
 }
 
 .particle {
