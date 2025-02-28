@@ -28,10 +28,10 @@ function createParticles() {
 
 // Функция для запуска музыки
 function playMusic() {
-    const audio = document.getElementById('music');
+    const audio = document.getElementById('background-music');
 
     if (!audio) {
-        console.error("Ошибка: музыкальный элемент (#music) не найден!");
+        console.error("Ошибка: музыкальный элемент (#background-music) не найден!");
         return;
     }
 
