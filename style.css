@@ -66,8 +66,8 @@ body {
 
 /* Позиции кнопок для screen-3 */
 #screen-3 .invisible-button:nth-child(1) { top: 49%; left: 11%; }
-#screen-3 .invisible-button:nth-child(2) { top: 59%; left: 11%; }
-#screen-3 .invisible-button:nth-child(3) { top: 69%; left: 11%; }
+#screen-3 .invisible-button:nth-child(2) { top: 58%; left: 11%; }
+#screen-3 .invisible-button:nth-child(3) { top: 68%; left: 11%; }
 
 /* Позиции кнопок для screen-4 */
 #screen-4 .invisible-button:nth-child(1) { top: 60%; left: 30%; }
