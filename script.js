@@ -3,13 +3,14 @@ document.addEventListener("DOMContentLoaded", function () {
     let currentScreen = 1;
     let correctAnswers = 0;
 
+    // Воспроизведение музыки при первом клике
     function playMusic() {
         music.play().catch(error => console.log("Музыка не смогла запуститься:", error));
         document.removeEventListener("click", playMusic);
     }
-    
     document.addEventListener("click", playMusic);
 
+    // Переключение экранов
     function showScreen(id) {
         document.querySelectorAll(".screen").forEach(screen => screen.style.display = "none");
         document.getElementById(`screen-${id}`).style.display = "block";
@@ -20,8 +21,9 @@ document.addEventListener("DOMContentLoaded", function () {
         showScreen(id);
     };
 
+    // Обработка ответов
     window.answer = function (selected, screen) {
-        let correct = { 3: 2, 4: 3, 5: 2 };
+        let correct = { 3: 2, 4: 3, 5: 2 }; // Правильные ответы
         
         if (selected === correct[screen]) {
             correctAnswers++;
@@ -39,11 +41,13 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     };
 
+    // Перезапуск игры
     window.restart = function () {
         correctAnswers = 0;
         goToScreen(1);
     };
 
+    // Создание частиц
     function createParticles() {
         let container = document.getElementById("particles");
         for (let i = 0; i < 50; i++) {
@@ -55,6 +59,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    createParticles();
-    showScreen(1);
+    createParticles(); // Создаем частицы
+    showScreen(1); // Показываем первый экран
 });
