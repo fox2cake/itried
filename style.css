@@ -1,83 +1,63 @@
-body {
+* {
     margin: 0;
-    overflow: hidden;
-    background-size: cover;
-    background-position: center;
-    transition: background 1s ease-in-out;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-.screen {
-    position: absolute;
+body {
     width: 100vw;
     height: 100vh;
+    overflow: hidden;
+    background: black;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
+.screen {
+    width: 100vw;
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    display: none;
+    position: absolute;
+}
+
+#screen-1 { background-image: url('screen-1.jpg'); }
+#screen-2 { background-image: url('screen-2.jpg'); }
+#screen-3 { background-image: url('screen-3.jpg'); }
+#screen-4 { background-image: url('screen-4.jpg'); }
+#screen-5 { background-image: url('screen-5.jpg'); }
+#screen-win { background-image: url('screen-win.jpg'); }
+#screen-loose { background-image: url('screen-loose.jpg'); }
+
 .invisible-button {
     position: absolute;
-    width: 200px;
-    height: 50px;
+    width: 20%;
+    height: 10%;
     background: transparent;
     border: none;
     cursor: pointer;
 }
 
-.particles {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-}
+/* Размещаем кнопки */
+#screen-1 .invisible-button { top: 70%; left: 40%; }
+#screen-2 .invisible-button { top: 70%; left: 40%; }
+#screen-3 .invisible-button:nth-child(1) { top: 60%; left: 30%; }
+#screen-3 .invisible-button:nth-child(2) { top: 60%; left: 50%; }
+#screen-3 .invisible-button:nth-child(3) { top: 60%; left: 70%; }
+#screen-4 .invisible-button:nth-child(1) { top: 60%; left: 30%; }
+#screen-4 .invisible-button:nth-child(2) { top: 60%; left: 50%; }
+#screen-4 .invisible-button:nth-child(3) { top: 60%; left: 70%; }
+#screen-5 .invisible-button:nth-child(1) { top: 60%; left: 30%; }
+#screen-5 .invisible-button:nth-child(2) { top: 60%; left: 50%; }
+#screen-5 .invisible-button:nth-child(3) { top: 60%; left: 70%; }
+#screen-win .invisible-button { top: 80%; left: 40%; }
+#screen-loose .invisible-button { top: 80%; left: 40%; }
 
-.particle {
+#particles {
     position: absolute;
-    width: 5px;
-    height: 5px;
-    background: rgba(255, 204, 0, 0.8);
-    border-radius: 50%;
-    opacity: 0;
-    animation: fall linear infinite;
-}
-
-.screen-1 {
-    background-image: url("./screen-1.jpg");
-}
-
-.screen-2 {
-    background-image: url("./screen-2.jpg");
-}
-
-.screen-3 {
-    background-image: url("./screen-3.jpg");
-}
-
-.screen-4 {
-    background-image: url("./screen-4.jpg");
-}
-
-.screen-5 {
-    background-image: url("./screen-5.jpg");
-}
-
-.screen-win {
-    background-image: url("./screen-win.jpg");
-}
-
-.screen-loose {
-    background-image: url("./screen-loose.jpg");
-}
-
-@keyframes fall {
-    from {
-        transform: translateY(-100vh);
-        opacity: 1;
-    }
-    to {
-        transform: translateY(100vh);
-        opacity: 0;
-    }
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
 }
