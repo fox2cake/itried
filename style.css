@@ -64,8 +64,8 @@ body {
     position: absolute;
     width: 100vw;
     height: 100vh;
-    pointer-events: none;
-    overflow: hidden;
+    pointer-events: none; /* Чтобы частицы не мешали кликам */
+    overflow: hidden; /* Чтобы частицы не выходили за пределы экрана */
 }
 
 .particle {
