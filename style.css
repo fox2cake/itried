@@ -44,31 +44,31 @@ body {
 }
 
 .screen-1 {
-    background-image: url("screen-1.jpg");
+    background-image: url("./screen-1.jpg");
 }
 
 .screen-2 {
-    background-image: url("screen-2.jpg");
+    background-image: url("./screen-2.jpg");
 }
 
 .screen-3 {
-    background-image: url("screen-3.jpg");
+    background-image: url("./screen-3.jpg");
 }
 
 .screen-4 {
-    background-image: url("screen-4.jpg");
+    background-image: url("./screen-4.jpg");
 }
 
 .screen-5 {
-    background-image: url("screen-5.jpg");
+    background-image: url("./screen-5.jpg");
 }
 
 .screen-win {
-    background-image: url("screen-win.jpg");
+    background-image: url("./screen-win.jpg");
 }
 
 .screen-loose {
-    background-image: url("screen-loose.jpg");
+    background-image: url("./screen-loose.jpg");
 }
 
 @keyframes fall {
