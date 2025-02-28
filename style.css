@@ -40,7 +40,6 @@ body {
     cursor: pointer;
 }
 
-/* Размещаем кнопки */
 #screen-1 .invisible-button { top: 70%; left: 40%; }
 #screen-2 .invisible-button { top: 70%; left: 40%; }
 #screen-3 .invisible-button:nth-child(1) { top: 60%; left: 30%; }
@@ -60,4 +59,18 @@ body {
     width: 100vw;
     height: 100vh;
     pointer-events: none;
+}
+
+.particle {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: white;
+    border-radius: 50%;
+    animation: float linear infinite;
+}
+
+@keyframes float {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-100vh); }
 }
