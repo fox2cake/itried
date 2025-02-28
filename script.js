@@ -1,45 +1,50 @@
-const screens = ["screen-1", "screen-2", "screen-3", "screen-4", "screen-5", "screen-win", "screen-loose"];
-let currentScreen = "screen-1";
-let wrongAnswers = 0;
-
-document.addEventListener("DOMContentLoaded", () => {
-    const audio = document.getElementById("bg-music");
-    if (audio) {
-        audio.volume = 0.5;
-        audio.play().catch(() => {});
-    }
-
+document.addEventListener('DOMContentLoaded', () => {
+    // Запускаем частицы и музыку только после полной загрузки
     createParticles();
+    playMusic();
 });
 
-function changeScreen(nextScreen) {
-    if (screens.includes(nextScreen)) {
-        currentScreen = nextScreen;
-        document.body.style.backgroundImage = `url('${nextScreen}.jpg')`;
-    }
-}
-
-function handleAnswer(isCorrect) {
-    if (!isCorrect) {
-        wrongAnswers++;
-    }
-
-    if (currentScreen === "screen-3") changeScreen("screen-4");
-    else if (currentScreen === "screen-4") changeScreen("screen-5");
-    else if (currentScreen === "screen-5") {
-        if (wrongAnswers > 0) changeScreen("screen-loose");
-        else changeScreen("screen-win");
-    }
-}
-
+// Функция создания частиц
 function createParticles() {
-    const particleContainer = document.querySelector(".particles");
-    for (let i = 0; i < 30; i++) {
-        let particle = document.createElement("div");
-        particle.classList.add("particle");
-        particle.style.left = Math.random() * 100 + "vw";
-        particle.style.top = Math.random() * -100 + "vh";
-        particle.style.animationDuration = (Math.random() * 3 + 2) + "s";
-        particleContainer.appendChild(particle);
+    const particlesContainer = document.getElementById('particles');
+    
+    // Проверяем, существует ли контейнер
+    if (!particlesContainer) {
+        console.error("Ошибка: контейнер для частиц (#particles) не найден!");
+        return;
+    }
+
+    for (let i = 0; i < 50; i++) {
+        let particle = document.createElement('div');
+        particle.className = 'particle';
+        
+        // Случайные позиции
+        particle.style.left = Math.random() * 100 + 'vw';
+        particle.style.top = Math.random() * 100 + 'vh';
+
+        particlesContainer.appendChild(particle);
+    }
+}
+
+// Функция для запуска музыки
+function playMusic() {
+    const audio = document.getElementById('background-music');
+
+    if (!audio) {
+        console.error("Ошибка: музыкальный элемент (#background-music) не найден!");
+        return;
+    }
+
+    audio.play().catch(error => {
+        console.warn("Музыка не смогла автоматически запуститься:", error);
+    });
+}
+
+// Функция смены фона (если нужно)
+function changeBackground(image) {
+    if (image) {
+        document.body.style.backgroundImage = `url(${image})`;
+    } else {
+        console.warn("Фон не был изменен, изображение не передано.");
     }
 }
