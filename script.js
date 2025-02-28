@@ -1,50 +1,60 @@
-document.addEventListener('DOMContentLoaded', () => {
-    // Запускаем частицы и музыку только после полной загрузки
-    createParticles();
-    playMusic();
-});
+document.addEventListener("DOMContentLoaded", function () {
+    let music = document.getElementById("background-music");
+    let currentScreen = 1;
+    let correctAnswers = 0;
 
-// Функция создания частиц
-function createParticles() {
-    const particlesContainer = document.getElementById('particles');
+    function playMusic() {
+        music.play().catch(error => console.log("Музыка не смогла запуститься:", error));
+        document.removeEventListener("click", playMusic);
+    }
     
-    // Проверяем, существует ли контейнер
-    if (!particlesContainer) {
-        console.error("Ошибка: контейнер для частиц (#particles) не найден!");
-        return;
+    document.addEventListener("click", playMusic);
+
+    function showScreen(id) {
+        document.querySelectorAll(".screen").forEach(screen => screen.style.display = "none");
+        document.getElementById(`screen-${id}`).style.display = "block";
     }
 
-    for (let i = 0; i < 50; i++) {
-        let particle = document.createElement('div');
-        particle.className = 'particle';
+    window.goToScreen = function (id) {
+        currentScreen = id;
+        showScreen(id);
+    };
+
+    window.answer = function (selected, screen) {
+        let correct = { 3: 2, 4: 3, 5: 2 };
         
-        // Случайные позиции
-        particle.style.left = Math.random() * 100 + 'vw';
-        particle.style.top = Math.random() * 100 + 'vh';
+        if (selected === correct[screen]) {
+            correctAnswers++;
+        }
+        
+        if (screen === 5) {
+            if (correctAnswers === 3) {
+                showScreen("win");
+            } else {
+                showScreen("loose");
+            }
+            correctAnswers = 0;
+        } else {
+            goToScreen(screen + 1);
+        }
+    };
 
-        particlesContainer.appendChild(particle);
+    window.restart = function () {
+        correctAnswers = 0;
+        goToScreen(1);
+    };
+
+    function createParticles() {
+        let container = document.getElementById("particles");
+        for (let i = 0; i < 50; i++) {
+            let particle = document.createElement("div");
+            particle.classList.add("particle");
+            particle.style.left = `${Math.random() * 100}vw`;
+            particle.style.animationDuration = `${2 + Math.random() * 3}s`;
+            container.appendChild(particle);
+        }
     }
-}
 
-// Функция для запуска музыки
-function playMusic() {
-    const audio = document.getElementById('background-music');
-
-    if (!audio) {
-        console.error("Ошибка: музыкальный элемент (#background-music) не найден!");
-        return;
-    }
-
-    audio.play().catch(error => {
-        console.warn("Музыка не смогла автоматически запуститься:", error);
-    });
-}
-
-// Функция смены фона (если нужно)
-function changeBackground(image) {
-    if (image) {
-        document.body.style.backgroundImage = `url(${image})`;
-    } else {
-        console.warn("Фон не был изменен, изображение не передано.");
-    }
-}
+    createParticles();
+    showScreen(1);
+});
