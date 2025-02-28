@@ -1,14 +1,14 @@
 document.addEventListener("DOMContentLoaded", function () {
     let music = document.getElementById("background-music");
-    let currentScreen = 1;
-    let correctAnswers = 0;
 
     // Воспроизведение музыки при первом клике
     function playMusic() {
         music.play().catch(error => console.log("Музыка не смогла запуститься:", error));
         document.removeEventListener("click", playMusic);
     }
+
     document.addEventListener("click", playMusic);
+});
 
     // Переключение экранов
     function showScreen(id) {
