@@ -48,7 +48,7 @@ body {
 
 /* Кнопки для screen-3, screen-4 и screen-5 */
 .button-small {
-    width: 42%; /* Ширина кнопки */
+    width: 45%; /* Ширина кнопки */
     height: 6%; /* Высота кнопки */
 }
 
@@ -60,14 +60,14 @@ body {
 
 /* Позиции кнопок для screen-2 */
 #screen-2 .invisible-button {
-    top: 82%; /* Позиция по вертикали */
-    left: 40%; /* Позиция по горизонтали */
+    top: 84%; /* Позиция по вертикали */
+    left: 42%; /* Позиция по горизонтали */
 }
 
 /* Позиции кнопок для screen-3 */
-#screen-3 .invisible-button:nth-child(1) { top: 48%; left: 12%; }
-#screen-3 .invisible-button:nth-child(2) { top: 52%; left: 12%; }
-#screen-3 .invisible-button:nth-child(3) { top: 56%; left: 12%; }
+#screen-3 .invisible-button:nth-child(1) { top: 50%; left: 12%; }
+#screen-3 .invisible-button:nth-child(2) { top: 55%; left: 12%; }
+#screen-3 .invisible-button:nth-child(3) { top: 60%; left: 12%; }
 
 /* Позиции кнопок для screen-4 */
 #screen-4 .invisible-button:nth-child(1) { top: 60%; left: 30%; }
