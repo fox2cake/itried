@@ -12,7 +12,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Переключение экранов
     function showScreen(id) {
-        document.querySelectorAll(".screen").forEach(screen => screen.style.display = "none");
+        document.querySelectorAll(".screen").forEach(screen => {
+            screen.style.display = "none";
+        });
         document.getElementById(`screen-${id}`).style.display = "block";
     }
 
@@ -48,22 +50,21 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 
     // Создание частиц
-  function createParticles() {
-    let container = document.getElementById("particles");
-    if (!container) {
-        console.error("Элемент #particles не найден!");
-        return;
+    function createParticles() {
+        let container = document.getElementById("particles");
+        if (!container) {
+            console.error("Элемент #particles не найден!");
+            return;
+        }
+        for (let i = 0; i < 50; i++) {
+            let particle = document.createElement("div");
+            particle.classList.add("particle");
+            particle.style.left = `${Math.random() * 100}vw`;
+            particle.style.animationDuration = `${2 + Math.random() * 3}s`;
+            container.appendChild(particle);
+        }
     }
-    for (let i = 0; i < 50; i++) {
-        let particle = document.createElement("div");
-        particle.classList.add("particle");
-        particle.style.left = `${Math.random() * 100}vw`;
-        particle.style.animationDuration = `${2 + Math.random() * 3}s`;
-        container.appendChild(particle);
-    }
-}
 
-// Создаем частицы при загрузке страницы
-document.addEventListener("DOMContentLoaded", function () {
-    createParticles();
+    createParticles(); // Создаем частицы
+    showScreen(1); // Показываем первый экран
 });
