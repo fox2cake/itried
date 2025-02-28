@@ -37,7 +37,9 @@ body {
     background: transparent;
     border: none;
     cursor: pointer;
-    opacity: 1; /* Убедитесь, что кнопки видимы */
+    opacity: 0; /* Полная прозрачность */
+    pointer-events: auto; /* Разрешить взаимодействие */
+    z-index: 2; /* Кнопки поверх других элементов */
 }
 
 /* Кнопки для screen-1, screen-2, screen-win и screen-loose */
