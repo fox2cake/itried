@@ -92,3 +92,29 @@ body {
     top: 87%; /* Позиция по вертикали */
     left: 40%; /* Позиция по горизонтали */
 }
+
+/* Контейнер для частиц */
+#particles {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none; /* Чтобы частицы не мешали кликам */
+    overflow: hidden; /* Чтобы частицы не выходили за пределы экрана */
+    z-index: 1; /* Частицы будут поверх фона, но под кнопками */
+}
+
+/* Стили для каждой частицы */
+.particle {
+    position: absolute;
+    width: 5px; /* Размер частицы */
+    height: 5px;
+    background: rgba(255, 255, 0, 0.5); /* Желтый цвет с полупрозрачностью */
+    border-radius: 50%; /* Круглая форма */
+    animation: float linear infinite; /* Анимация */
+}
+
+/* Анимация для движения частиц */
+@keyframes float {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-100vh); }
+}
