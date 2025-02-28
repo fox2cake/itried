@@ -1,5 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
     let music = document.getElementById("background-music");
+    let currentScreen = 1;
+    let correctAnswers = 0;
 
     // Воспроизведение музыки при первом клике
     function playMusic() {
@@ -17,12 +19,12 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById(`screen-${id}`).style.display = "block";
     }
 
+    // Глобальные функции
     window.goToScreen = function (id) {
         currentScreen = id;
         showScreen(id);
     };
 
-    // Обработка ответов
     window.answer = function (selected, screen) {
         let correct = { 3: 2, 4: 3, 5: 2 }; // Правильные ответы
         
@@ -42,7 +44,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     };
 
-    // Перезапуск игры
     window.restart = function () {
         correctAnswers = 0;
         goToScreen(1);
