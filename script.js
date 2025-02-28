@@ -49,22 +49,5 @@ document.addEventListener("DOMContentLoaded", function () {
         goToScreen(1);
     };
 
-    // Создание частиц
-    function createParticles() {
-        let container = document.getElementById("particles");
-        if (!container) {
-            console.error("Элемент #particles не найден!");
-            return;
-        }
-        for (let i = 0; i < 50; i++) {
-            let particle = document.createElement("div");
-            particle.classList.add("particle");
-            particle.style.left = `${Math.random() * 100}vw`;
-            particle.style.animationDuration = `${2 + Math.random() * 3}s`;
-            container.appendChild(particle);
-        }
-    }
-
-    createParticles(); // Создаем частицы
     showScreen(1); // Показываем первый экран
 });
